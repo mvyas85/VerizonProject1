@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">VerizonProject</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="INSERT_TAG">Insert my TAG</string>
+    <string name="ENTER_TAG">Enter a Tag:</string>
+    <string name="VIEW_ALL_TAGS">All TAGs</string>
+    <string name="title_activity_tag_list">Tag List</string>
+    <string name="COUNT">Count</string>
+
+
+    <string name="Most_Frq_tag">Most Frequent Tag</string>
+    <string name="Ascending_order">Ascending Order ↑</string>
+    <string name="Descending_order">Descending Order ↓</string>
+    <string name="Total_num_of_tags">Total Number of TAGS : </string>
+    <string name="Tag_Text">Tag Text</string>
+    <string name="duplicate_thousand_times">Duplicate TAG(s) 1000 times</string>
+</resources>
