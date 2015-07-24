@@ -114,9 +114,15 @@ public class TagListAdapter  extends ArrayAdapter<TagCounts> {
 
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
+                if (!hasFocus) {
+                    // When Edit text looses focus you dont want to keep showing keyboard or
+                    //Enter button so toggle it.
                     InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(holder.hidden_edit_view.getWindowToken(), 0);
+                    holder.btn_image.setChecked(false);
+                    holder.tv_tag.setVisibility(View.VISIBLE);
+                    holder.hidden_edit_view.setVisibility(View.GONE);
+                    holder.changeToEditMode = true;
                 }
             }
         });
