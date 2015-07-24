@@ -104,9 +104,7 @@ public class TagListAdapter  extends ArrayAdapter<TagCounts> {
                         } else {
                             Toast.makeText(context, "Error storing updated !", Toast.LENGTH_SHORT).show();
                         }
-                    }else{
-                        //Dont store in DB - do nothing
-                    }
+                    }else{/*Dont store in DB - do nothing*/}
                     holder.changeToEditMode = true;
                 }
             }

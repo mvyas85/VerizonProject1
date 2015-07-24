@@ -25,14 +25,14 @@ dependencies {
 
 // This is the actual solution, as in http://stackoverflow.com/a/19037807/1002054
 task clearJar(type: Delete) {
-    delete 'build/libs/tags_asc_dsc.jar'
+    delete 'build/libs/tags_asc_dsc_jars.jar'
 }
 
 task makeJar(type: Copy) {
-    from('build/bundles/release/')
+    from('build/intermediates/bundles/release/')
     into('build/libs/')
     include('classes.jar')
-    rename ('classes.jar', 'tags_asc_dsc.jar')
+    rename ('classes.jar', 'tags_asc_dsc_jars.jar')
 }
 
 makeJar.dependsOn(clearJar, build)
