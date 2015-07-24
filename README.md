@@ -20,7 +20,8 @@ In your application, provide a second screen that provides the requirements belo
 Application must support portrait and landscape orientations.  Application must run on Gingerbread and newer versions of Android.
 
 
-Detail:
+Design Detail:
+=============
 
 Snapshots ::
 ============
@@ -28,15 +29,16 @@ This Screen is First Activity in your Applicaiton ::
 
 Only Allowed Text is [a-z] [A-Z] [0-9] space or back
 
-![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/2.png)
+![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/1.png)
 
 By clicking Insert My Tag Button you will be able to insert your Tag in to the SQLite Database-
 Clicking on Red All Tag will take you to next Activity where you can see all the TAGs
 
-![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/1.png)
+![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/2.png)
 
 (To go back to previous screen click on Back Arrow) on Action Menu Bar.
 There are three buttons on the top of screen 
+
      1. Duplicate TAG(s) 1000 Times - will let you duplicate desired Tag 1000 times
      2. Most Frequent TAG Button - will let you see which TAG is used added number of Times.
      3. Descending/ Ascending Order Toggle Button - will let you organize your list into Descending/ Ascending Order 
@@ -60,3 +62,56 @@ By clicking on MOST FREQUENT TAG will show you dialog with highest used TAG
 Since you are Duplicating Entry 1000 times ( for each selected TAG) it may take few seconds to complete Transaction, So showing Loading Dialog while DB is inserting Entries - for better user Experience.
 
 ![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/7.png)
+
+
+TECHNICAL DETAIL
+================
+
+- This project is Using API 9:Android 2.3 (Gingerbread)
+- Project also uses support Library **appcompact-v7**
+- Custom library **tags_asc_dsc_libs**
+        This library includes mainly have 2 classes
+            1. TagCounts
+            2. TagsUtil
+            
+    **Detail about HOW TO CREATE *tags_asc_dsc_libs* JAR to distribute project**
+    
+        Create Libary Project.
+        Add Following Code snipet in gradle.build to create Gradle Task for *makeJAR*
+
+
+        dependencies {
+            compile fileTree(dir: 'libs', include: ['*.jar'])
+            compile 'com.android.support:appcompat-v7:22.2.0'
+        }
+        // This is the actual solution, as in http://stackoverflow.com/a/19037807/1002054
+        task clearJar(type: Delete) {
+            delete 'build/libs/tags_asc_dsc_jars.jar'
+        }
+        task makeJar(type: Copy) {
+            from('build/intermediates/bundles/release/')
+            into('build/libs/')
+            include('classes.jar')
+            rename ('classes.jar', 'tags_asc_dsc_jars.jar')
+        }
+        
+        
+    This will create tags_asc_dsc_jars.jar insde your Library Project's build/libs/ foler.These JARs can be distribute to other projects.
+    
+    **Detail about HOW TO ADD *tags_asc_dsc_libs* into a project**
+    
+        JAR file for tags_asc_dsc_libs library are stored in 
+        First you have to add library project (module) in Android Studio
+            File -> Import Module
+        To add library project (module) in build path, click
+            File -> Project Structure
+        On the left hand side click on
+            app -> Dependencies tab -> green + button -> Module dependency
+        Now select the library project you already added.
+        
+        For more details refer[this link](http://stackoverflow.com/questions/16588064/how-do-i-add-a-library-project-to-the-android-studio/16639227#16639227)
+
+- ArrayAdapter of TagCount object is used to populate data into the Listview ( Recycled using ViewHolder)
+- TagListActivity is using AsyncTask to insert (big Transaction of 1000 data) in to DB
+
+
