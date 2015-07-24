@@ -53,8 +53,6 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         });
-
-
     }
 
     static InputFilter myFilter = new InputFilter() {

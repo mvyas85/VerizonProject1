@@ -77,7 +77,12 @@ public class TagListActivity extends ActionBarActivity {
         btn_most_frq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMostFrequentTag(Collections.max(sortedList));
+                if(sortedList.size()>0) {
+                    showMostFrequentTag(Collections.max(sortedList));
+                    adapter.resetSelectedTags();
+                }else {
+                    Toast.makeText(context, "TAG list is Empty !", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -86,6 +91,7 @@ public class TagListActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 new LoadDataTask().execute(context);
+                adapter.resetSelectedTags();
             }
         });
     }
@@ -111,7 +117,10 @@ public class TagListActivity extends ActionBarActivity {
         adapter.notifyDataSetChanged();
         tv_total_tag_count.setText(TotalNumTAGStr + totalTagsCount());
     }
+    void reLoadData() {
+        reLoadData(Current_Order);
 
+    }
     private boolean duplicate1000TimesTags (ArrayList<TagCounts> tags){
         boolean success = false;
         for(int i = 0;i<tags.size();i++){

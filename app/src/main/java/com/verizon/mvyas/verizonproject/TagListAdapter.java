@@ -104,6 +104,7 @@ public class TagListAdapter  extends ArrayAdapter<TagCounts> {
                     if(!aTag.getTag().equals(new_tag_text)) {
                         if (mydb.updateTag(aTag.getTag(), new_tag_text)) {
                             Toast.makeText(context, "TAG successfully updated !", Toast.LENGTH_SHORT).show();
+                            ((TagListActivity)getContext()).reLoadData();
                         } else {
                             Toast.makeText(context, "Error storing updated !", Toast.LENGTH_SHORT).show();
                         }
@@ -135,5 +136,7 @@ public class TagListAdapter  extends ArrayAdapter<TagCounts> {
     public  void resetSelectedTags(){
         for(CheckBox c : checkBoxes)
             c.setChecked(false);
+
+        selectedStrings.clear();
     }
 }
