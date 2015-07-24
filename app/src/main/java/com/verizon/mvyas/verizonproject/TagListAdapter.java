@@ -72,7 +72,7 @@ public class TagListAdapter  extends ArrayAdapter<TagCounts> {
         holder.tv_tag.setText(aTag.getTag());
         holder.tv_numb.setText("< " + aTag.getCount() + " >");
         holder.hidden_edit_view.setText(aTag.getTag());
-        holder.hidden_edit_view.setFilters(new InputFilter[] { MainActivity.myFilter});
+        holder.hidden_edit_view.setFilters(new InputFilter[]{MainActivity.myFilter});
         holder.btn_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,19 +93,30 @@ public class TagListAdapter  extends ArrayAdapter<TagCounts> {
                     holder.tv_tag.setVisibility(View.VISIBLE);
                     holder.hidden_edit_view.setVisibility(View.GONE);
 
-                   imm.hideSoftInputFromWindow(holder.hidden_edit_view.getWindowToken(), 0);
+                    imm.hideSoftInputFromWindow(holder.hidden_edit_view.getWindowToken(), 0);
 
                     String new_tag_text = holder.hidden_edit_view.getText().toString();
                     holder.tv_tag.setText(new_tag_text);
-                    if(!aTag.getTag().equals(new_tag_text)) {
+                    if (!aTag.getTag().equals(new_tag_text)) {
                         if (mydb.updateTag(aTag.getTag(), new_tag_text)) {
                             Toast.makeText(context, "TAG successfully updated !", Toast.LENGTH_SHORT).show();
-                            ((TagListActivity)getContext()).reLoadData();
+                            ((TagListActivity) getContext()).reLoadData();
                         } else {
                             Toast.makeText(context, "Error storing updated !", Toast.LENGTH_SHORT).show();
                         }
-                    }else{/*Dont store in DB - do nothing*/}
+                    } else {/*Dont store in DB - do nothing*/}
                     holder.changeToEditMode = true;
+                }
+            }
+        });
+
+        holder.hidden_edit_view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(holder.hidden_edit_view.getWindowToken(), 0);
                 }
             }
         });
