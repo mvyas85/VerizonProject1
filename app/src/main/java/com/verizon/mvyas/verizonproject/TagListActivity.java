@@ -70,6 +70,7 @@ public class TagListActivity extends ActionBarActivity {
                     reLoadData(DSC_ORD);
                     Current_Order = DSC_ORD;
                 }
+                adapter.resetSelectedTags();
             }
         });
 
@@ -83,6 +84,7 @@ public class TagListActivity extends ActionBarActivity {
                 }else {
                     Toast.makeText(context, "TAG list is Empty !", Toast.LENGTH_SHORT).show();
                 }
+                adapter.resetSelectedTags();
             }
         });
 
