@@ -20,7 +20,8 @@ In your application, provide a second screen that provides the requirements belo
 Application must support portrait and landscape orientations.  Application must run on Gingerbread and newer versions of Android.
 
 
-Detail:
+Design Detail:
+=============
 
 Snapshots ::
 ============
@@ -60,3 +61,26 @@ By clicking on MOST FREQUENT TAG will show you dialog with highest used TAG
 Since you are Duplicating Entry 1000 times ( for each selected TAG) it may take few seconds to complete Transaction, So showing Loading Dialog while DB is inserting Entries - for better user Experience.
 
 ![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/7.png)
+
+
+TECHNICAL DETAIL
+================
+
+- This project is Using API 9:Android 2.3 (Gingerbread)
+- Project also uses support Library **appcompact-v7**
+- Custom library **tags_asc_dsc_libs**
+        This library includes mainly have 2 classes
+            1. TagCounts
+            2. TagsUtil
+    (Detail about Adding **tags_asc_dsc_libs** into project - 
+        First you have to add library project (module) in Android Studio
+            File -> Import Module
+        To add library project (module) in build path, click
+            File -> Project Structure
+        On the left hand side click on
+            app -> Dependencies tab -> green + button -> Module dependency
+        Now select the library project you already added.
+
+        For more details refer [this link](http://stackoverflow.com/questions/16588064/how-do-i-add-a-library-project-to-the-android-studio/16639227#16639227)
+
+- 
