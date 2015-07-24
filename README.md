@@ -96,11 +96,9 @@ TECHNICAL DETAIL
         }
         
         
-    This will create tags_asc_dsc_jars.jar insde your Project's build/libs/ foler.
+    This will create tags_asc_dsc_jars.jar insde your Library Project's build/libs/ foler.These JARs can be distribute to other projects.
     
-    These JARs can be distribute to other projects.
-    
-    **Detail about HOW TO ADD *tags_asc_dsc_libs* into a project **
+    **Detail about HOW TO ADD *tags_asc_dsc_libs* into a project**
     
         JAR file for tags_asc_dsc_libs library are stored in 
         First you have to add library project (module) in Android Studio
@@ -113,4 +111,7 @@ TECHNICAL DETAIL
         
         For more details refer[this link](http://stackoverflow.com/questions/16588064/how-do-i-add-a-library-project-to-the-android-studio/16639227#16639227)
 
-- 
+- ArrayAdapter of TagCount object is used to populate data into the Listview ( Recycled using ViewHolder)
+- TagListActivity is using AsyncTask to insert (big Transaction of 1000 data) in to DB
+
+
