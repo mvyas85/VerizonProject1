@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':tags_asc_dsc_libs'

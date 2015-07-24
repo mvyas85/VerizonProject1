@@ -36,7 +36,7 @@
             android:textOn="@string/Ascending_order"
             android:textOff="@string/Descending_order"
             android:id="@+id/btn_asc_dsc"
-        android:layout_weight="1"/>
+            android:layout_weight="1"/>
     </LinearLayout>
 
     <TextView
@@ -44,6 +44,8 @@
         android:layout_height="wrap_content"
         android:text="@string/Total_num_of_tags"
         android:id="@+id/tv_total_tag_count"
+        android:textSize="@dimen/text_size_18"
+        android:textStyle="bold"
         android:layout_below="@+id/linearLayout"
         android:layout_centerHorizontal="true"
         />
@@ -71,7 +73,7 @@
                 />
 
         <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:text="@string/Tag_Text"
                 android:textSize="@dimen/text_size_18"
@@ -79,6 +81,7 @@
                 android:layout_marginLeft="@dimen/padding_5"
                 android:paddingLeft="@dimen/padding_10"
                 android:layout_weight="2"
+                android:gravity="center"
                 android:background="@color/accent_material_dark"
                 />
 

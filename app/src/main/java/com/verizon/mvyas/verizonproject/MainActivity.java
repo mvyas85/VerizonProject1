@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -37,7 +38,11 @@ public class MainActivity extends ActionBarActivity {
         btn_insert_tag.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                mydb.insertTAG(et_mytag.getText().toString());
+                if(mydb.insertTAG(et_mytag.getText().toString())){
+                    Toast.makeText(getApplicationContext(), "TAG successfully added !", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getApplicationContext(), "Error storing data !", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

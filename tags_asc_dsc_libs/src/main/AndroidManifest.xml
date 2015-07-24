@@ -1,0 +1,8 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.verizon.mvyas.tags_asc_dsc_libs">
+
+    <application android:allowBackup="true" android:label="@string/app_name">
+
+    </application>
+
+</manifest>

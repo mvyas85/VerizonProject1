@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.verizon.mvyas.data.TagCounts;
+import com.verizon.mvyas.tags_asc_dsc_libs.data.TagCounts;
 
 
 /**
@@ -96,10 +96,12 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor res =  db.rawQuery( queryStr, null );
         res.moveToFirst();
 
+        int i=0;
         while(res.isAfterLast() == false){
             TagCounts tag_with_count = new TagCounts(res.getString(res.getColumnIndex(COLUMN_TAG)),
                                res.getInt(res.getColumnIndex("COUNT(" + COLUMN_TAG + ")")));
             tag_map.add(tag_with_count);
+            Log.d("While reading = " + (i++), "" + tag_with_count.getTag());
             res.moveToNext();
         }
         return tag_map;

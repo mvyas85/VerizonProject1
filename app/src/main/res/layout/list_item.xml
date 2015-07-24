@@ -3,20 +3,15 @@
 android:orientation="horizontal" android:layout_width="match_parent"
 android:paddingTop="@dimen/padding_5"
 android:paddingBottom="@dimen/padding_5"
-android:layout_height="match_parent">
+android:layout_height="match_parent"
+    android:background="@color/accent_material_dark">
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/checkBox"
-        />
+        android:id="@+id/checkBox" />
 
-    <ViewSwitcher
-    android:id="@+id/my_switcher"
-    android:layout_width="100dp"
-    android:layout_height="wrap_content">
-
-        <TextView
+    <TextView
         android:id="@+id/tv_numb"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
@@ -26,27 +21,14 @@ android:layout_height="match_parent">
         android:textSize="@dimen/text_size_18"
         android:gravity="center"
         android:background="@color/accent_material_light" />
-
-
-        <EditText
-        android:id="@+id/hidden_edit_view"
+    <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/text_size_18"
+        android:text="@string/Tag_Text"
         android:textColor="@color/black"
-        android:background="@color/white"
-        android:paddingLeft="30dp"
-        android:inputType="number"/>
-    </ViewSwitcher>
-
-
-<TextView
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/Tag_Text"
-    android:textSize="@dimen/text_size_18"
-    android:id="@+id/tv_tag"
-    android:layout_marginLeft="@dimen/padding_5"
-    android:paddingLeft="@dimen/padding_10"
-    android:background="@color/accent_material_dark"/>
+        android:textSize="@dimen/text_size_18"
+        android:id="@+id/tv_tag"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:paddingLeft="@dimen/padding_10"
+        android:background="@color/accent_material_dark"/>
 </LinearLayout>
