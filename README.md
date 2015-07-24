@@ -74,8 +74,35 @@ TECHNICAL DETAIL
             1. TagCounts
             2. TagsUtil
             
-    (Detail about Adding **tags_asc_dsc_libs** into project )
+    **Detail about HOW TO CREATE *tags_asc_dsc_libs* JAR to distribute project**
     
+        Create Libary Project.
+        Add Following Code snipet in gradle.build to create Gradle Task for *makeJAR*
+
+
+        dependencies {
+            compile fileTree(dir: 'libs', include: ['*.jar'])
+            compile 'com.android.support:appcompat-v7:22.2.0'
+        }
+        // This is the actual solution, as in http://stackoverflow.com/a/19037807/1002054
+        task clearJar(type: Delete) {
+            delete 'build/libs/tags_asc_dsc_jars.jar'
+        }
+        task makeJar(type: Copy) {
+            from('build/intermediates/bundles/release/')
+            into('build/libs/')
+            include('classes.jar')
+            rename ('classes.jar', 'tags_asc_dsc_jars.jar')
+        }
+        
+        
+    This will create tags_asc_dsc_jars.jar insde your Project's build/libs/ foler.
+    
+    These JARs can be distribute to other projects.
+    
+    **Detail about HOW TO ADD *tags_asc_dsc_libs* into a project **
+    
+        JAR file for tags_asc_dsc_libs library are stored in 
         First you have to add library project (module) in Android Studio
             File -> Import Module
         To add library project (module) in build path, click
@@ -83,7 +110,7 @@ TECHNICAL DETAIL
         On the left hand side click on
             app -> Dependencies tab -> green + button -> Module dependency
         Now select the library project you already added.
-
-        For more details refer [this link](http://stackoverflow.com/questions/16588064/how-do-i-add-a-library-project-to-the-android-studio/16639227#16639227)
+        
+        For more details refer[this link](http://stackoverflow.com/questions/16588064/how-do-i-add-a-library-project-to-the-android-studio/16639227#16639227)
 
 - 
