@@ -1,6 +1,7 @@
 # VerizonProject
 
 Requirment ::
+=============
 
 Build an Android application that allows a customer to enter text that will be treated as a "Tag". Tags should be saved to the device so they can be  viewed/edited at any  time. Text for a tag can contain alpha numeric characters  and no special characters.  
 
@@ -21,4 +22,19 @@ Application must support portrait and landscape orientations.  Application must 
 
 Detail:
 
-Snap shots
+Snapshots ::
+============
+
+![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/1.png)
+
+![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/2.png)
+
+![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/3.png)
+
+![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/4.png)
+
+![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/5.png)
+
+![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/6.png)
+
+![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/7.png)
