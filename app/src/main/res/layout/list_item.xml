@@ -4,7 +4,8 @@ android:orientation="horizontal" android:layout_width="match_parent"
 android:paddingTop="@dimen/padding_5"
 android:paddingBottom="@dimen/padding_5"
 android:layout_height="match_parent"
-    android:background="@color/accent_material_dark">
+    android:background="@color/accent_material_dark"
+    android:weightSum="1">
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -21,14 +22,38 @@ android:layout_height="match_parent"
         android:textSize="@dimen/text_size_18"
         android:gravity="center"
         android:background="@color/accent_material_light" />
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Tag_Text"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_size_18"
-        android:id="@+id/tv_tag"
-        android:layout_marginLeft="@dimen/margin_10"
-        android:paddingLeft="@dimen/padding_10"
-        android:background="@color/accent_material_dark"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Tag_Text"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_18"
+            android:id="@+id/tv_tag"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/margin_10"
+            android:paddingLeft="@dimen/padding_10"
+            android:background="@color/accent_material_dark"/>
+
+        <EditText
+            android:id="@+id/hidden_edit_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_18"
+            android:layout_weight="1"
+            android:editable="true"
+            android:paddingLeft="@dimen/padding_10"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:visibility="gone">
+    <requestFocus/>
+    </EditText>
+
+    <ToggleButton
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/btn_image"
+        android:background="@drawable/edit_toggle_button"
+        android:textOn=""
+        android:textOff=""/>
 </LinearLayout>

@@ -40,6 +40,7 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 if(mydb.insertTAG(et_mytag.getText().toString())){
                     Toast.makeText(getApplicationContext(), "TAG successfully added !", Toast.LENGTH_SHORT).show();
+                    et_mytag.setText("");
                 }else {
                     Toast.makeText(getApplicationContext(), "Error storing data !", Toast.LENGTH_SHORT).show();
                 }

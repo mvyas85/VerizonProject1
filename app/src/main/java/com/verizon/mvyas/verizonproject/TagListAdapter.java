@@ -1,15 +1,18 @@
 package com.verizon.mvyas.verizonproject;
 
+import android.app.Activity;
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.verizon.mvyas.tags_asc_dsc_libs.data.TagCounts;
 
@@ -17,84 +20,97 @@ import java.util.ArrayList;
 
 public class TagListAdapter  extends ArrayAdapter<TagCounts> {
 
+    private ArrayList<TagCounts> selectedStrings = new ArrayList<TagCounts>();
+    private ArrayList<CheckBox> checkBoxes = new ArrayList<CheckBox>();
     private Context context;
-     ArrayList<TagCounts> selectedStrings = new ArrayList<TagCounts>();
+    private DBHelper mydb ;
+
+    boolean isEditMode = true;
 
     public TagListAdapter(Context context, ArrayList<TagCounts> tagObj) {
         super(context, 0, tagObj);
         this.context = context;
+
+        mydb = new DBHelper(context);
+    }
+
+    static class ViewHolder {
+        private TextView tv_numb,tv_tag;
+        private EditText hidden_edit_view;
+        private ToggleButton btn_image;
+        private CheckBox checkBox;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        Log.d("Gev","View getting called "+position);
         final TagCounts aTag = getItem(position);
 
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
+        View rowView = convertView;
+
+        if (rowView == null) {
+            LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
+            rowView = inflater.inflate(R.layout.list_item, parent, false);
+            ViewHolder holder = new ViewHolder();
+            holder.tv_numb = (TextView) rowView.findViewById(R.id.tv_numb);
+            holder.tv_tag = (TextView) rowView.findViewById(R.id.tv_tag);
+            holder.hidden_edit_view = (EditText) rowView.findViewById(R.id.hidden_edit_view);
+            holder.btn_image = (ToggleButton) rowView.findViewById(R.id.btn_image);
+            holder.checkBox = (CheckBox) rowView.findViewById(R.id.checkBox);
+            rowView.setTag(holder);
         }
 
-        TextView tv_tag = (TextView) convertView.findViewById(R.id.tv_tag);
-        final TextView tv_numb = (TextView) convertView.findViewById(R.id.tv_numb);
+         final ViewHolder holder = (ViewHolder) rowView.getTag();
 
-        tv_tag.setText(aTag.getTag());
-        tv_numb.setText(aTag.getCount()+"");
-        tv_numb.addTextChangedListener(new TextWatcher() {
-
+        final InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        holder.tv_tag.setText(aTag.getTag());
+        holder.tv_numb.setText("< " + aTag.getCount() + " >");
+        holder.hidden_edit_view.setText(aTag.getTag());
+        holder.btn_image.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                // TODO Auto-generated method stub
+            public void onClick(View v) {
+                if(isEditMode) {
 
-            }
+                    holder.hidden_edit_view.setVisibility(View.VISIBLE);
+                    holder.hidden_edit_view.setText(holder.tv_tag.getText());
+                 //   holder.hidden_edit_view.setSelection(holder.hidden_edit_view.getText().length());
+                    imm.showSoftInput((View) holder.hidden_edit_view.getWindowToken(), 0);
 
-            @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-                                          int arg3) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable arg0) {
-                // TODO Auto-generated method stub
-                // Log.d("Hi","You inserted " + arg0.toString());
-                // Toast.makeText(context,"You inserted"+ arg0.toString(),Toast.LENGTH_SHORT).show();
-                //arrTemp[holder.ref] = arg0.toString();
+                    holder.tv_tag.setVisibility(View.GONE);
+                    //holder.hidden_edit_view.requestFocus();
+                    isEditMode = false;
+                } else {
+                    holder.tv_tag.setVisibility(View.VISIBLE);
+                    holder.hidden_edit_view.setVisibility(View.GONE);
+                    if( holder.hidden_edit_view.getText().toString().length() == 0 )
+                    holder.hidden_edit_view.setError("Player name is required!");
+//                    String new_tag_text = holder.hidden_edit_view.getText().toString();
+//                    holder.tv_tag.setText(new_tag_text);
+//                    //mydb.updateTag(aTag.getTag(), new_tag_text);
+                    isEditMode = true;
+                }
             }
         });
 
+        holder.hidden_edit_view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    holder.tv_tag.setVisibility(View.VISIBLE);
+                    // hide the keyboard in order to avoid getTextBeforeCursor on inactive InputConnection
+                   // InputMethodManager inputMethodManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(holder.hidden_edit_view.getWindowToken(), 0);
 
-        tv_numb.setText("< " + aTag.getCount() + " >");
 
-//        final ViewSwitcher switcher = (ViewSwitcher) convertView.findViewById(R.id.my_switcher);
-//        final EditText hidden_edit_view = (EditText) convertView.findViewById(R.id.hidden_edit_view);
-//
-//        tv_numb.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                switcher.showNext();
-//                hidden_edit_view.requestFocus();
-//
-//                InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-//                imm.showSoftInput(hidden_edit_view, InputMethodManager.SHOW_IMPLICIT);
-//            }
-//        });
-//
-//        hidden_edit_view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if (!hasFocus) {
-//                    switcher.showNext();
-//
-//                    int new_Count = Integer.parseInt(hidden_edit_view.getText().toString());
-//                    tv_numb.setText("< " + new_Count + " >");
-//                }
-//            }
-//        });
+                    holder.hidden_edit_view.setVisibility(View.GONE);
+                    holder.btn_image.toggle();
+                    String new_tag_text = holder.hidden_edit_view.getText().toString();
+                    holder.tv_tag.setText(new_tag_text);
+                    mydb.updateTag(aTag.getTag(), new_tag_text);
+                }
+            }
+        });
 
-        final CheckBox tv = (CheckBox)convertView.findViewById(R.id.checkBox);
-
-        tv.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -102,37 +118,17 @@ public class TagListAdapter  extends ArrayAdapter<TagCounts> {
                 } else {
                     selectedStrings.remove(aTag);
                 }
-
             }
         });
-
-        return convertView;
+        checkBoxes.add(holder.checkBox);
+        return rowView;
     }
 
     public  ArrayList<TagCounts> getSelectedTags(){
         return selectedStrings;
     }
+    public  void resetSelectedTags(){
+        for(CheckBox c : checkBoxes)
+            c.setChecked(false);
+    }
 }
-
-/*
-
-      //  TextView tv_numb = (TextView) convertView.findViewById(R.id.tv_numb);
-        final EditText hidden_edit_view = (EditText) convertView.findViewById(R.id.hidden_edit_view);
-//
-
-        if (hidden_edit_view.length() > 0) {
-            hidden_edit_view.getText().clear();
-        }
-       // tv_numb.setText("< " + tag_map.getCount() + " >");
-//
-//        final ViewSwitcher switcher = (ViewSwitcher) convertView.findViewById(R.id.my_switcher);
-//        final EditText hidden_edit_view = (EditText) convertView.findViewById(R.id.hidden_edit_view);
-//
-//        tv_numb.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//               switcher.showNext();
-//               // switcher.getNextView().requestFocus();
-//            }
-//        });
- */

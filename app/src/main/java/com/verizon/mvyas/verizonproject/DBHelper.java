@@ -25,7 +25,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLE_NAME = "tb_tags";
 
     public static final String COLUMN_TAG = "tag";
-    private HashMap hp;
 
     public DBHelper(Context context)
     {
@@ -78,11 +77,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return numRows;
     }
 
-    public boolean updateContact (String tag)    {
+    public boolean updateTag (String oldTag,String newTag)    {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_TAG, tag);
-        db.update(TABLE_NAME, contentValues, COLUMN_TAG+"= ? ", new String[] {tag } );
+        contentValues.put(COLUMN_TAG, newTag);
+        db.update(TABLE_NAME, contentValues, COLUMN_TAG+"= ? ", new String[] {oldTag} );
         return true;
     }
 

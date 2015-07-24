@@ -1,10 +1,14 @@
 package com.verizon.mvyas.verizonproject;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ListView;
@@ -22,13 +26,16 @@ import java.util.Collections;
 public class TagListActivity extends ActionBarActivity {
 
     private DBHelper mydb ;
-    private ArrayList<TagCounts> unsorted_arraylist;
     private TagListAdapter adapter;
-    private  ListView listView;
+    private ListView listView;
     private TextView tv_total_tag_count;
     private Button btn_duplicate_thousand_times,btn_most_frq;
     private ToggleButton toggle;
     private String TotalNumTAGStr ;
+    private boolean Result = false;
+    private Context context;
+
+    ProgressDialog myLoadingDialog;
     ArrayList<TagCounts> sortedList;
 
     public static final byte ASC_ORD = 0;
@@ -40,13 +47,11 @@ public class TagListActivity extends ActionBarActivity {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_tag_list);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
+        context = getApplicationContext();
         mydb = new DBHelper(this);
-        unsorted_arraylist = mydb.getTagsGroupByTagCount();
-        sortedList = new ArrayList<TagCounts>();
+        sortedList = new ArrayList<>();
 
-        reLoadData(unsorted_arraylist, Current_Order);
+        reLoadData(Current_Order);
 
         listView  = (ListView) findViewById(R.id.lv_tags);
         listView.setAdapter(adapter);
@@ -55,16 +60,14 @@ public class TagListActivity extends ActionBarActivity {
         tv_total_tag_count = (TextView) findViewById(R.id.tv_total_tag_count);
         tv_total_tag_count.setText(TotalNumTAGStr + totalTagsCount());
 
-
         toggle = (ToggleButton) findViewById(R.id.btn_asc_dsc);
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-               sortedList.clear();
                 if (isChecked) {
-                    reLoadData(unsorted_arraylist, ASC_ORD);
+                    reLoadData(ASC_ORD);
                     Current_Order = ASC_ORD;
                 } else {
-                    reLoadData(unsorted_arraylist, DSC_ORD);
+                    reLoadData(DSC_ORD);
                     Current_Order = DSC_ORD;
                 }
             }
@@ -82,12 +85,7 @@ public class TagListActivity extends ActionBarActivity {
         btn_duplicate_thousand_times.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (duplicate1000TimesTags(adapter.getSelectedTags())) {
-                    Toast.makeText(getApplicationContext(), "TAG(s) successfully added !", Toast.LENGTH_SHORT).show();
-                    reLoadData(mydb.getTagsGroupByTagCount(), Current_Order);
-                } else {
-                    Toast.makeText(getApplicationContext(), "Error storing data !", Toast.LENGTH_SHORT).show();
-                }
+                new LoadDataTask().execute(context);
             }
         });
     }
@@ -99,11 +97,12 @@ public class TagListActivity extends ActionBarActivity {
         }
         return total;
     }
-    void reLoadData(ArrayList<TagCounts> unsorted_arraylist, byte order) {
+    void reLoadData(byte order) {
+        sortedList.clear();
         if(order == ASC_ORD) {
-            sortedList.addAll(TagsUtil.sortTagsAsc(unsorted_arraylist));
+            sortedList.addAll(TagsUtil.sortTagsAsc(mydb.getTagsGroupByTagCount()));
         }else {
-            sortedList.addAll(TagsUtil.sortTagsDsc(unsorted_arraylist));
+            sortedList.addAll(TagsUtil.sortTagsDsc(mydb.getTagsGroupByTagCount()));
         }
         if(adapter == null){
             adapter = new TagListAdapter(this, sortedList);
@@ -134,4 +133,39 @@ public class TagListActivity extends ActionBarActivity {
                 .show();
     }
 
+    protected class LoadDataTask extends AsyncTask<Context, Integer, String>
+    {
+        @Override
+        protected void onPreExecute()
+        {
+            myLoadingDialog = new ProgressDialog(TagListActivity.this);
+            myLoadingDialog.setMessage("Loading");
+            myLoadingDialog.setIndeterminate(false);
+            myLoadingDialog.setCancelable(false);
+            myLoadingDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(Context... arg0)
+        {
+            Result = duplicate1000TimesTags(adapter.getSelectedTags());
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (Result) {
+                Toast.makeText(getApplicationContext(), "TAG(s) successfully added !", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Error storing data !", Toast.LENGTH_SHORT).show();
+            }
+            reLoadData(Current_Order);
+            adapter.resetSelectedTags();
+            myLoadingDialog.hide();
+            super.onPostExecute(result);
+        }
+    }
+
 }
+
