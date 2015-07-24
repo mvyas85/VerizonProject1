@@ -114,4 +114,15 @@ TECHNICAL DETAIL
 - ArrayAdapter of TagCount object is used to populate data into the Listview ( Recycled using ViewHolder)
 - TagListActivity is using AsyncTask to insert (big Transaction of 1000 data) in to DB
 
+Instructions for building and running application
+===================================================
 
+        1. Download and install app-release.apk onto your device
+        2. Download the Project and open with in Android Studio and run it on Simulator or on your device using debug mode.
+
+**Device Tested (Smoke) Tested on::**
+
+        1. Samsung Galaxy S5
+        2. Samsung TAB 4
+        3. Samsung Note 3
+        4. Samsung Galaxy Tab Pro
