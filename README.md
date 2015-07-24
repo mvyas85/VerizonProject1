@@ -117,7 +117,7 @@ TECHNICAL DETAIL
 Instructions for building and running application
 ===================================================
 
-        1. Download and install app-release.apk onto your device
+        1. Download and install [app-release.apk](https://github.com/mvyas85/VerizonProject1/tree/master/app) onto your device
         2. Download the Project and open with in Android Studio and run it on Simulator or on your device using debug mode.
 
 **Device Tested (Smoke) Tested on::**
