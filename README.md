@@ -38,6 +38,7 @@ Clicking on Red All Tag will take you to next Activity where you can see all the
 
 (To go back to previous screen click on Back Arrow) on Action Menu Bar.
 There are three buttons on the top of screen 
+
      1. Duplicate TAG(s) 1000 Times - will let you duplicate desired Tag 1000 times
      2. Most Frequent TAG Button - will let you see which TAG is used added number of Times.
      3. Descending/ Ascending Order Toggle Button - will let you organize your list into Descending/ Ascending Order 
@@ -72,7 +73,9 @@ TECHNICAL DETAIL
         This library includes mainly have 2 classes
             1. TagCounts
             2. TagsUtil
-    (Detail about Adding **tags_asc_dsc_libs** into project - 
+            
+    (Detail about Adding **tags_asc_dsc_libs** into project )
+    
         First you have to add library project (module) in Android Studio
             File -> Import Module
         To add library project (module) in build path, click
