@@ -109,7 +109,8 @@ TECHNICAL DETAIL
             app -> Dependencies tab -> green + button -> Module dependency
         Now select the library project you already added.
         
-        For more details refer[this link](http://stackoverflow.com/questions/16588064/how-do-i-add-a-library-project-to-the-android-studio/16639227#16639227)
+
+For more details refer [this link](http://stackoverflow.com/questions/16588064/how-do-i-add-a-library-project-to-the-android-studio/16639227#16639227)
 
 - ArrayAdapter of TagCount object is used to populate data into the Listview ( Recycled using ViewHolder)
 - TagListActivity is using AsyncTask to insert (big Transaction of 1000 data) in to DB
@@ -117,8 +118,8 @@ TECHNICAL DETAIL
 Instructions for building and running application
 ===================================================
 
-        1. Download and install [app-release.apk](https://github.com/mvyas85/VerizonProject1/tree/master/app) onto your device
-        2. Download the Project and open with in Android Studio and run it on Simulator or on your device using debug mode.
+1. Download and install [app-release.apk](https://github.com/mvyas85/VerizonProject1/tree/master/app) onto your device
+2. Download the Project and open with in Android Studio and run it on Simulator or on your device using debug mode.
 
 **Device Tested (Smoke) Tested on::**
 
