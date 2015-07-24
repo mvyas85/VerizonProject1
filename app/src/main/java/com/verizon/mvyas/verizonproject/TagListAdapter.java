@@ -26,8 +26,6 @@ public class TagListAdapter  extends ArrayAdapter<TagCounts> {
     private Context context;
     private DBHelper mydb ;
 
-
-
     public TagListAdapter(Context context, ArrayList<TagCounts> tagObj) {
         super(context, 0, tagObj);
         this.context = context;
@@ -85,10 +83,8 @@ public class TagListAdapter  extends ArrayAdapter<TagCounts> {
 
                     holder.hidden_edit_view.setVisibility(View.VISIBLE);
                     holder.hidden_edit_view.setText(holder.tv_tag.getText());
-
                     holder.tv_tag.setVisibility(View.GONE);
                     holder.hidden_edit_view.requestFocus();
-
 
                     imm.showSoftInput(holder.hidden_edit_view, InputMethodManager.SHOW_IMPLICIT);
 
@@ -108,9 +104,7 @@ public class TagListAdapter  extends ArrayAdapter<TagCounts> {
                         } else {
                             Toast.makeText(context, "Error storing updated !", Toast.LENGTH_SHORT).show();
                         }
-                    }else{
-                        //Dont store in DB - do nothing
-                    }
+                    }else{/*Dont store in DB - do nothing*/}
                     holder.changeToEditMode = true;
                 }
             }
