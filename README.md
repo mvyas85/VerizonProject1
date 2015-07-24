@@ -28,12 +28,12 @@ This Screen is First Activity in your Applicaiton ::
 
 Only Allowed Text is [a-z] [A-Z] [0-9] space or back
 
-![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/2.png)
+![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/1.png)
 
 By clicking Insert My Tag Button you will be able to insert your Tag in to the SQLite Database-
 Clicking on Red All Tag will take you to next Activity where you can see all the TAGs
 
-![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/1.png)
+![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/2.png)
 
 (To go back to previous screen click on Back Arrow) on Action Menu Bar.
 There are three buttons on the top of screen 
