@@ -1,6 +1,7 @@
 # VerizonProject
 
 Requirment ::
+=============
 
 Build an Android application that allows a customer to enter text that will be treated as a "Tag". Tags should be saved to the device so they can be  viewed/edited at any  time. Text for a tag can contain alpha numeric characters  and no special characters.  
 
@@ -21,4 +22,41 @@ Application must support portrait and landscape orientations.  Application must 
 
 Detail:
 
-Snap shots
+Snapshots ::
+============
+This Screen is First Activity in your Applicaiton ::
+
+Only Allowed Text is [a-z] [A-Z] [0-9] space or back
+
+![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/2.png)
+
+By clicking Insert My Tag Button you will be able to insert your Tag in to the SQLite Database-
+Clicking on Red All Tag will take you to next Activity where you can see all the TAGs
+
+![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/1.png)
+
+(To go back to previous screen click on Back Arrow) on Action Menu Bar.
+There are three buttons on the top of screen 
+     1. Duplicate TAG(s) 1000 Times - will let you duplicate desired Tag 1000 times
+     2. Most Frequent TAG Button - will let you see which TAG is used added number of Times.
+     3. Descending/ Ascending Order Toggle Button - will let you organize your list into Descending/ Ascending Order 
+
+![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/3.png)
+
+When you click on Edit Button near your Tag it will let you Edit your desired TAG text.
+By Pressing Enter ↵ button on right will Update your Entry.
+
+![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/4.png)
+
+After every successful update it will show you Toast that entry has been updated and it will refresh TOTAL TAG COUNT as well as the Cout of your TAG
+
+![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/5.png)
+
+By clicking on MOST FREQUENT TAG will show you dialog with highest used TAG
+- In case of multiple TAGs with same Count it will show you FIRST Tag in the Database ( No specific requirment given ! - can update if requirments occure )
+
+![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/6.png)
+
+Since you are Duplicating Entry 1000 times ( for each selected TAG) it may take few seconds to complete Transaction, So showing Loading Dialog while DB is inserting Entries - for better user Experience.
+
+![Image of Yaktocat](https://github.com/mvyas85/VerizonProject1/blob/master/images/7.png)
