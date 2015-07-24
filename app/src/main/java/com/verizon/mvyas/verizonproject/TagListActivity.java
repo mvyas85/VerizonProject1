@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ListView;
@@ -47,6 +46,7 @@ public class TagListActivity extends ActionBarActivity {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_tag_list);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         context = getApplicationContext();
         mydb = new DBHelper(this);
         sortedList = new ArrayList<>();
@@ -122,8 +122,8 @@ public class TagListActivity extends ActionBarActivity {
 
     private void showMostFrequentTag(TagCounts t) {
         new AlertDialog.Builder(this)
-                .setTitle("TAG")
-                .setMessage("Most Frequent Tag is : \n"+ t.getTag())
+                .setTitle("Most Frequent Tag is : ")
+                .setMessage( t.getTag())
                 .setPositiveButton("Ok",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {

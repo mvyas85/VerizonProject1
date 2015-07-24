@@ -41,12 +41,11 @@ android:layout_height="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_18"
             android:layout_weight="1"
-            android:editable="true"
             android:paddingLeft="@dimen/padding_10"
+            android:text="Some Text"
             android:background="@color/white"
             android:textColor="@color/black"
             android:visibility="gone">
-    <requestFocus/>
     </EditText>
 
     <ToggleButton

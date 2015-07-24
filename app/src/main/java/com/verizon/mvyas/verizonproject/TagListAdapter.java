@@ -2,7 +2,7 @@ package com.verizon.mvyas.verizonproject;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.verizon.mvyas.tags_asc_dsc_libs.data.TagCounts;
@@ -25,7 +26,7 @@ public class TagListAdapter  extends ArrayAdapter<TagCounts> {
     private Context context;
     private DBHelper mydb ;
 
-    boolean isEditMode = true;
+
 
     public TagListAdapter(Context context, ArrayList<TagCounts> tagObj) {
         super(context, 0, tagObj);
@@ -39,11 +40,12 @@ public class TagListAdapter  extends ArrayAdapter<TagCounts> {
         private EditText hidden_edit_view;
         private ToggleButton btn_image;
         private CheckBox checkBox;
+
+        boolean changeToEditMode = true;
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        Log.d("Gev","View getting called "+position);
         final TagCounts aTag = getItem(position);
 
         View rowView = convertView;
@@ -60,52 +62,55 @@ public class TagListAdapter  extends ArrayAdapter<TagCounts> {
             rowView.setTag(holder);
         }
 
-         final ViewHolder holder = (ViewHolder) rowView.getTag();
+        final ViewHolder holder = (ViewHolder) rowView.getTag();
 
-        final InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (holder.hidden_edit_view.length() > 0) {
+            holder.hidden_edit_view.getText().clear();
+        }
         holder.tv_tag.setText(aTag.getTag());
         holder.tv_numb.setText("< " + aTag.getCount() + " >");
         holder.hidden_edit_view.setText(aTag.getTag());
+
+        holder.tv_tag.setText(aTag.getTag());
+        holder.tv_numb.setText("< " + aTag.getCount() + " >");
+        holder.hidden_edit_view.setText(aTag.getTag());
+        holder.hidden_edit_view.setFilters(new InputFilter[] { MainActivity.myFilter});
         holder.btn_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isEditMode) {
+
+                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                if (holder.changeToEditMode) {
 
                     holder.hidden_edit_view.setVisibility(View.VISIBLE);
                     holder.hidden_edit_view.setText(holder.tv_tag.getText());
-                 //   holder.hidden_edit_view.setSelection(holder.hidden_edit_view.getText().length());
-                    imm.showSoftInput((View) holder.hidden_edit_view.getWindowToken(), 0);
 
                     holder.tv_tag.setVisibility(View.GONE);
-                    //holder.hidden_edit_view.requestFocus();
-                    isEditMode = false;
+                    holder.hidden_edit_view.requestFocus();
+
+
+                    imm.showSoftInput(holder.hidden_edit_view, InputMethodManager.SHOW_IMPLICIT);
+
+                    holder.changeToEditMode = false;
                 } else {
                     holder.tv_tag.setVisibility(View.VISIBLE);
                     holder.hidden_edit_view.setVisibility(View.GONE);
-                    if( holder.hidden_edit_view.getText().toString().length() == 0 )
-                    holder.hidden_edit_view.setError("Player name is required!");
-//                    String new_tag_text = holder.hidden_edit_view.getText().toString();
-//                    holder.tv_tag.setText(new_tag_text);
-//                    //mydb.updateTag(aTag.getTag(), new_tag_text);
-                    isEditMode = true;
-                }
-            }
-        });
 
-        holder.hidden_edit_view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    holder.tv_tag.setVisibility(View.VISIBLE);
-                    // hide the keyboard in order to avoid getTextBeforeCursor on inactive InputConnection
-                   // InputMethodManager inputMethodManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(holder.hidden_edit_view.getWindowToken(), 0);
+                   imm.hideSoftInputFromWindow(holder.hidden_edit_view.getWindowToken(), 0);
 
-
-                    holder.hidden_edit_view.setVisibility(View.GONE);
-                    holder.btn_image.toggle();
                     String new_tag_text = holder.hidden_edit_view.getText().toString();
                     holder.tv_tag.setText(new_tag_text);
-                    mydb.updateTag(aTag.getTag(), new_tag_text);
+                    if(!aTag.getTag().equals(new_tag_text)) {
+                        if (mydb.updateTag(aTag.getTag(), new_tag_text)) {
+                            Toast.makeText(context, "TAG successfully updated !", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, "Error storing updated !", Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        //Dont store in DB - do nothing
+                    }
+                    holder.changeToEditMode = true;
                 }
             }
         });

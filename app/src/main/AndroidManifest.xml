@@ -19,7 +19,8 @@
         <activity
             android:name=".TagListActivity"
             android:label="@string/title_activity_tag_list"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="adjustPan">
         </activity>
     </application>
 
