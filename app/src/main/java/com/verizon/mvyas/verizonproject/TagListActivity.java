@@ -94,7 +94,7 @@ public class TagListActivity extends ActionBarActivity {
         btn_duplicate_thousand_times.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new LoadDataTask().execute(context);
+                new LoadDataTask().execute();
                 adapter.resetSelectedTags();
             }
         });
@@ -140,7 +140,7 @@ public class TagListActivity extends ActionBarActivity {
                 .setTitle("Most Frequent Tag is : ")
                 .setMessage( t.getTag())
                 .setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
+                                new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 //dismiss the dialog
                             }
@@ -149,28 +149,32 @@ public class TagListActivity extends ActionBarActivity {
     }
 
 
-    protected class LoadDataTask extends AsyncTask<Context, Integer, String>
+    protected class LoadDataTask extends AsyncTask<Void, Void, Void>
     {
+
+
         @Override
         protected void onPreExecute()
         {
+            super.onPreExecute();
             myLoadingDialog = new ProgressDialog(TagListActivity.this);
             myLoadingDialog.setMessage("Loading");
             myLoadingDialog.setIndeterminate(false);
             myLoadingDialog.setCancelable(false);
             myLoadingDialog.show();
-            super.onPreExecute();
         }
 
         @Override
-        protected String doInBackground(Context... arg0)
-        {
+        protected Void doInBackground(Void... params) {
             Result = duplicate1000TimesTags(adapter.getSelectedTags());
             return null;
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(Void result) {
+
+            super.onPostExecute(result);
+            myLoadingDialog.dismiss();
             if (Result) {
                 Toast.makeText(getApplicationContext(), "TAG(s) successfully added !", Toast.LENGTH_SHORT).show();
             } else {
@@ -178,10 +182,9 @@ public class TagListActivity extends ActionBarActivity {
             }
             reLoadData(Current_Order);
             adapter.resetSelectedTags();
-            myLoadingDialog.hide();
-            super.onPostExecute(result);
         }
     }
+
 
 
 

@@ -3,6 +3,7 @@ package com.verizon.mvyas.verizonproject;
 import android.app.Activity;
 import android.content.Context;
 import android.text.InputFilter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,10 +62,8 @@ public class TagListAdapter  extends ArrayAdapter<TagCounts> {
         }
 
         final ViewHolder holder = (ViewHolder) rowView.getTag();
+        final InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        if (holder.hidden_edit_view.length() > 0) {
-            holder.hidden_edit_view.getText().clear();
-        }
         holder.tv_tag.setText(aTag.getTag());
         holder.tv_numb.setText("< " + aTag.getCount() + " >");
         holder.hidden_edit_view.setText(aTag.getTag());
@@ -77,23 +76,22 @@ public class TagListAdapter  extends ArrayAdapter<TagCounts> {
             @Override
             public void onClick(View v) {
 
-                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
 
                 if (holder.changeToEditMode) {
-
+                    Log.d("NNNNMMNM", "is clicke"+holder.changeToEditMode);
+                    holder.tv_tag.setVisibility(View.GONE);
                     holder.hidden_edit_view.setVisibility(View.VISIBLE);
                     holder.hidden_edit_view.setText(holder.tv_tag.getText());
-                    holder.tv_tag.setVisibility(View.GONE);
                     holder.hidden_edit_view.requestFocus();
 
-                    imm.showSoftInput(holder.hidden_edit_view, InputMethodManager.SHOW_IMPLICIT);
+                  //  imm.showSoftInput(holder.hidden_edit_view, InputMethodManager.SHOW_IMPLICIT);
 
                     holder.changeToEditMode = false;
                 } else {
                     holder.tv_tag.setVisibility(View.VISIBLE);
                     holder.hidden_edit_view.setVisibility(View.GONE);
 
-                    imm.hideSoftInputFromWindow(holder.hidden_edit_view.getWindowToken(), 0);
+                  //  imm.hideSoftInputFromWindow(holder.hidden_edit_view.getWindowToken(), 0);
 
                     String new_tag_text = holder.hidden_edit_view.getText().toString();
                     holder.tv_tag.setText(new_tag_text);
@@ -110,22 +108,6 @@ public class TagListAdapter  extends ArrayAdapter<TagCounts> {
             }
         });
 
-        holder.hidden_edit_view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    // When Edit text looses focus you dont want to keep showing keyboard or
-                    //Enter button so toggle it.
-                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(holder.hidden_edit_view.getWindowToken(), 0);
-                    holder.btn_image.setChecked(false);
-                    holder.tv_tag.setVisibility(View.VISIBLE);
-                    holder.hidden_edit_view.setVisibility(View.GONE);
-                    holder.changeToEditMode = true;
-                }
-            }
-        });
 
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
