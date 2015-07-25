@@ -147,7 +147,5 @@ public class TagListAdapter  extends ArrayAdapter<TagCounts> {
     public  void resetSelectedTags(){
         for(CheckBox c : checkBoxes)
             c.setChecked(false);
-
-        selectedStrings.clear();
     }
 }

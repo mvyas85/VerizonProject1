@@ -120,15 +120,11 @@ public class TagListActivity extends ActionBarActivity {
         }
         adapter.notifyDataSetChanged();
         tv_total_tag_count.setText(TotalNumTAGStr + totalTagsCount());
-        getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
-        );
     }
 
     void reLoadData() {
         reLoadData(Current_Order);
         View view = this.getCurrentFocus();
-
 
     }
     private boolean duplicate1000TimesTags (ArrayList<TagCounts> tags){
@@ -186,6 +182,8 @@ public class TagListActivity extends ActionBarActivity {
             super.onPostExecute(result);
         }
     }
+
+
 
 }
 
