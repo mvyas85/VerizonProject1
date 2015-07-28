@@ -98,7 +98,6 @@ public class DBHelper extends SQLiteOpenHelper {
             TagCounts tag_with_count = new TagCounts(res.getString(res.getColumnIndex(COLUMN_TAG)),
                                res.getInt(res.getColumnIndex("COUNT(" + COLUMN_TAG + ")")));
             tag_map.add(tag_with_count);
-            Log.d("While reading = " + (i++), "" + tag_with_count.getTag());
             res.moveToNext();
         }
         return tag_map;

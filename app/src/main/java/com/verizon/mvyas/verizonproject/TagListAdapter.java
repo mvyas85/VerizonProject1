@@ -78,20 +78,20 @@ public class TagListAdapter  extends ArrayAdapter<TagCounts> {
 
 
                 if (holder.changeToEditMode) {
-                    Log.d("NNNNMMNM", "is clicke"+holder.changeToEditMode);
+                    Log.d("NNNNMMNM", "is clicke" + holder.changeToEditMode);
                     holder.tv_tag.setVisibility(View.GONE);
                     holder.hidden_edit_view.setVisibility(View.VISIBLE);
                     holder.hidden_edit_view.setText(holder.tv_tag.getText());
                     holder.hidden_edit_view.requestFocus();
 
-                  //  imm.showSoftInput(holder.hidden_edit_view, InputMethodManager.SHOW_IMPLICIT);
+                    //  imm.showSoftInput(holder.hidden_edit_view, InputMethodManager.SHOW_IMPLICIT);
 
                     holder.changeToEditMode = false;
                 } else {
                     holder.tv_tag.setVisibility(View.VISIBLE);
                     holder.hidden_edit_view.setVisibility(View.GONE);
 
-                  //  imm.hideSoftInputFromWindow(holder.hidden_edit_view.getWindowToken(), 0);
+                    //  imm.hideSoftInputFromWindow(holder.hidden_edit_view.getWindowToken(), 0);
 
                     String new_tag_text = holder.hidden_edit_view.getText().toString();
                     holder.tv_tag.setText(new_tag_text);
@@ -117,19 +117,24 @@ public class TagListAdapter  extends ArrayAdapter<TagCounts> {
                 } else {
                     selectedStrings.remove(aTag);
                 }
+                for (TagCounts selected : selectedStrings)
+                    Log.d("Shooooooo ", "selected strings are " + selected.getTag());
             }
+
         });
         checkBoxes.add(holder.checkBox);
         return rowView;
     }
 
     public  ArrayList<TagCounts> getSelectedTags(){
+        for (TagCounts selected : selectedStrings){
+            Log.d("Sho ", "selected strings are "+selected.getTag());
+    }
+        Log.d("Sending", "Size = "+selectedStrings.size());
         return selectedStrings;
     }
     public  void resetSelectedTags(){
         for(CheckBox c : checkBoxes)
             c.setChecked(false);
-
-        selectedStrings.clear();
     }
 }

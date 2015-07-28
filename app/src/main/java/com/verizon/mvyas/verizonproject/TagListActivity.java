@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -22,6 +23,7 @@ import com.verizon.mvyas.tags_asc_dsc_libs.TagsUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 
 public class TagListActivity extends ActionBarActivity {
@@ -38,6 +40,7 @@ public class TagListActivity extends ActionBarActivity {
 
     ProgressDialog myLoadingDialog;
     ArrayList<TagCounts> sortedList;
+    ArrayList<TagCounts> selectedTags;
 
     public static final byte ASC_ORD = 0;
     public static final byte DSC_ORD = 1;
@@ -52,6 +55,9 @@ public class TagListActivity extends ActionBarActivity {
         context = getApplicationContext();
         mydb = new DBHelper(this);
         sortedList = new ArrayList<>();
+        selectedTags = new ArrayList<>();
+
+      //  adapter = TagListAdapter(this,);
 
         reLoadData(Current_Order);
 
@@ -82,7 +88,6 @@ public class TagListActivity extends ActionBarActivity {
             public void onClick(View v) {
                 if(sortedList.size()>0) {
                     showMostFrequentTag(Collections.max(sortedList));
-                    adapter.resetSelectedTags();
                 }else {
                     Toast.makeText(context, "TAG list is Empty !", Toast.LENGTH_SHORT).show();
                 }
@@ -94,8 +99,9 @@ public class TagListActivity extends ActionBarActivity {
         btn_duplicate_thousand_times.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                selectedTags= adapter.getSelectedTags();
                 new LoadDataTask().execute();
-                adapter.resetSelectedTags();
             }
         });
     }
@@ -129,9 +135,16 @@ public class TagListActivity extends ActionBarActivity {
     }
     private boolean duplicate1000TimesTags (ArrayList<TagCounts> tags){
         boolean success = false;
-        for(int i = 0;i<tags.size();i++){
-            success = mydb.duplicateTag1000Time(tags.get(i).getTag());
+
+        for (Iterator<TagCounts> it = tags.iterator(); it.hasNext(); ) {
+            TagCounts aTag = it.next();
+            Log.d("Duplicating", "TAG: = " + aTag.getTag());
+            success = mydb.duplicateTag1000Time(aTag.getTag());
+            if(success == false)
+                break;
+
         }
+
         return success;
     }
 
@@ -166,7 +179,7 @@ public class TagListActivity extends ActionBarActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            Result = duplicate1000TimesTags(adapter.getSelectedTags());
+            Result = duplicate1000TimesTags(selectedTags);
             return null;
         }
 
